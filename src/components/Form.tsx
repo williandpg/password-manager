@@ -12,12 +12,10 @@ function Form(props:Props) {
     password: '',
     url: '',
   });
-
   const handleInputChange = (event: { target: { id: any; value: any; }; }) => {
     const { id, value } = event.target;
     setFormValues({ ...formValues, [id]: value });
   };
-
   const isButtonDisabled = !(formValues.name && formValues.login && formValues.password && formValues.password.length >= 8 && formValues.password.length <= 16 && /\d/.test(formValues.password) && /[a-zA-Z]/.test(formValues.password) && /[^a-zA-Z0-9]/.test(formValues.password));
 
   return (
@@ -29,7 +27,6 @@ function Form(props:Props) {
         value={ formValues.name }
         onChange={ handleInputChange }
       />
-
       <label htmlFor="login">Login</label>
       <input
         type="text"
@@ -37,7 +34,6 @@ function Form(props:Props) {
         value={ formValues.login }
         onChange={ handleInputChange }
       />
-
       <label htmlFor="password">Senha</label>
       <input
         type="password"
@@ -45,7 +41,6 @@ function Form(props:Props) {
         value={ formValues.password }
         onChange={ handleInputChange }
       />
-
       <label htmlFor="url">URL</label>
       <input
         type="text"
@@ -53,7 +48,6 @@ function Form(props:Props) {
         value={ formValues.url }
         onChange={ handleInputChange }
       />
-
       <input type="button" value="Cadastrar" disabled={ isButtonDisabled } />
       <input onClick={ () => { buttonClose(true); } } type="button" value="Cancelar" />
     </form>
