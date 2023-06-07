@@ -18,7 +18,8 @@ function Form(props:Props) {
     passwordVerification(value);
   };
   const isButtonDisabled = !(formValues.name && formValues.login && formValues.password && formValues.password.length >= 8 && formValues.password.length <= 16 && /\d/.test(formValues.password) && /[a-zA-Z]/.test(formValues.password) && /[^a-zA-Z0-9]/.test(formValues.password));
-
+  const valid = 'valid-password-check';
+  const invalid = 'invalid-password-check';
   const [verificationPassword, setVerificationPassword] = useState({
     caracMax: false,
     caracMin: false,
@@ -62,16 +63,36 @@ function Form(props:Props) {
         onChange={ handleInputChange }
       />
 
-      <label className={ verificationPassword.caracMin ? 'valid-password-check' : 'invalid-password-check' }>
+      <label
+        htmlFor="password"
+        className={ verificationPassword.caracMin
+          ? valid
+          : invalid }
+      >
         Possuir 8 ou mais caracteres
       </label>
-      <label className={ verificationPassword.caracMax ? 'valid-password-check' : 'invalid-password-check' }>
+      <label
+        htmlFor="password"
+        className={ verificationPassword.caracMax
+          ? valid
+          : invalid }
+      >
         Possuir até 16 caracteres
       </label>
-      <label className={ verificationPassword.numberAndLetter ? 'valid-password-check' : 'invalid-password-check' }>
+      <label
+        htmlFor="password"
+        className={ verificationPassword.numberAndLetter
+          ? valid
+          : invalid }
+      >
         Possuir letras e números
       </label>
-      <label className={ verificationPassword.specialCarac ? 'valid-password-check' : 'invalid-password-check' }>
+      <label
+        htmlFor="password"
+        className={ verificationPassword.specialCarac
+          ? valid
+          : invalid }
+      >
         Possuir algum caractere especial
       </label>
 
