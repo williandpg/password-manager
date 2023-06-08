@@ -3,15 +3,21 @@ import React, { useState } from 'react';
 type Props = {
   buttonClose: (parametro: boolean) => void;
 };
+type Services = {
+  name: string;
+  login: string;
+  password: string;
+  url: string;
+};
 
-function Form(props:Props) {
-  const { buttonClose } = props;
+function Form({ buttonClose }: Props) {
   const [formValues, setFormValues] = useState({
     name: '',
     login: '',
     password: '',
     url: '',
   });
+  const [service, setService] = useState<Services[]>([]);
   const handleInputChange = (event: { target: { id: any; value: any; }; }) => {
     const { id, value } = event.target;
     setFormValues({ ...formValues, [id]: value });
@@ -36,6 +42,15 @@ function Form(props:Props) {
       caracMin,
       numberAndLetter,
       specialCarac,
+    });
+  };
+  const handleCadastro = () => {
+    setService([...service, formValues]);
+    setFormValues({
+      name: '',
+      login: '',
+      password: '',
+      url: '',
     });
   };
 
@@ -103,7 +118,15 @@ function Form(props:Props) {
         value={ formValues.url }
         onChange={ handleInputChange }
       />
-      <input type="button" value="Cadastrar" disabled={ isButtonDisabled } />
+      <input
+        type="button"
+        value="Cadastrar"
+        disabled={ isButtonDisabled }
+        onClick={ () => {
+          handleCadastro();
+          buttonClose(true);
+        } }
+      />
       <input onClick={ () => { buttonClose(true); } } type="button" value="Cancelar" />
     </form>
   );
