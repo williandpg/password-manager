@@ -13,6 +13,7 @@ import Form, { ServicesType } from './components/Form';
 function App() {
   const [render, setRender] = useState(true);
   const [service, setService] = useState<ServicesType[]>([]);
+  const [checkbox, setCheckbox] = useState(false);
   const passwordValidation = (event: any, data: ServicesType) => {
     const passwordSaved = [...service, data];
     setService(passwordSaved);
@@ -42,6 +43,14 @@ function App() {
           buttonClose={ () => setRender(true) }
         />
       )}
+      <label htmlFor="checkbox">
+        Esconder senhas
+        <input
+          type="checkbox"
+          id="checkbox"
+          onChange={ () => setCheckbox(!checkbox) }
+        />
+      </label>
       <ul>
         { service.length > 0 ? service.map((pass, index) => (
           <li key={ index }>
@@ -49,7 +58,7 @@ function App() {
             <p>Login</p>
             <p>{ pass.login }</p>
             <p>Senha</p>
-            <p>{ pass.password }</p>
+            <p>{ checkbox ? '********' : pass.password }</p>
             <button
               data-testid="remove-btn"
               onClick={ removeService }
