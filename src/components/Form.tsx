@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 type Props = {
   buttonClose: () => void;
@@ -52,6 +53,12 @@ function Form({ buttonClose, passwordValidation }: Props) {
       login: '',
       password: '',
       url: '',
+    });
+    Swal.fire({
+      text: 'Serviço cadastrado com sucesso',
+      timer: 1500,
+      timerProgressBar: true,
+      showConfirmButton: false,
     });
   };
   const [showPassword, setShowPassword] = useState(false);
@@ -132,6 +139,7 @@ function Form({ buttonClose, passwordValidation }: Props) {
       <button
         type="submit"
         disabled={ isButtonDisabled }
+        onClick={ handleCadastro }
       >
         Cadastrar
 
