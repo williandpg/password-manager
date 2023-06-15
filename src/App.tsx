@@ -58,7 +58,7 @@ function App() {
             <p>Login</p>
             <p>{ pass.login }</p>
             <p>Senha</p>
-            <p>{ checkbox ? '********' : pass.password }</p>
+            <p>{ checkbox ? '******' : pass.password }</p>
             <button
               data-testid="remove-btn"
               onClick={ removeService }
