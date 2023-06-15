@@ -45,15 +45,15 @@ function Form({ buttonClose, passwordValidation }: Props) {
       specialCarac,
     });
   };
-  // const handleCadastro = () => {
-  //   setService([...service, formValues]);
-  //   setFormValues({
-  //     name: '',
-  //     login: '',
-  //     password: '',
-  //     url: '',
-  //   });
-  // };
+  const handleCadastro = () => {
+    setService([...service, formValues]);
+    setFormValues({
+      name: '',
+      login: '',
+      password: '',
+      url: '',
+    });
+  };
 
   return (
     <form

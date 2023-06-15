@@ -18,6 +18,17 @@ function App() {
     setService(passwordSaved);
     setRender(true);
   };
+  const removeService = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+    const targetId = event.target as HTMLButtonElement;
+    const { id } = targetId;
+    if (id) {
+      const passwordRemov = service.splice(Number(id), Number(id + 1));
+      const newArray = service.filter((pass) => pass !== passwordRemov[0]);
+      setService(newArray);
+    }
+  };
+
   return (
     <div>
       <Title />
@@ -32,13 +43,20 @@ function App() {
         />
       )}
       <ul>
-        { service.length > 0 ? service.map((services, key) => (
-          <li key={ key }>
-            <a href={ services.url }>{ services.name }</a>
+        { service.length > 0 ? service.map((pass, index) => (
+          <li key={ index }>
+            <a href={ pass.url }>{ pass.name }</a>
             <p>Login</p>
-            <p>{ services.login }</p>
+            <p>{ pass.login }</p>
             <p>Senha</p>
-            <p>{ services.password }</p>
+            <p>{ pass.password }</p>
+            <button
+              data-testid="remove-btn"
+              onClick={ removeService }
+              id={ index.toString() }
+            >
+              Excluir
+            </button>
           </li>
         )) : <h3>Nenhuma senha cadastrada</h3> }
       </ul>
