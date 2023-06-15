@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 
 type Props = {
-  buttonClose: (parametro: boolean) => void;
+  buttonClose: () => void;
+  passwordValidation: (event: any, data: ServicesType) => void;
 };
-type Services = {
+export type ServicesType = {
   name: string;
   login: string;
   password: string;
   url: string;
 };
-
-function Form({ buttonClose }: Props) {
-  const [formValues, setFormValues] = useState({
-    name: '',
-    login: '',
-    password: '',
-    url: '',
-  });
-  const [service, setService] = useState<Services[]>([]);
+const initialFormValues = {
+  name: '',
+  login: '',
+  password: '',
+  url: '',
+};
+function Form({ buttonClose, passwordValidation }: Props) {
+  const [formValues, setFormValues] = useState<ServicesType>(initialFormValues);
+  const [service, setService] = useState<ServicesType[]>([]);
   const handleInputChange = (event: { target: { id: any; value: any; }; }) => {
     const { id, value } = event.target;
     setFormValues({ ...formValues, [id]: value });
@@ -44,18 +45,24 @@ function Form({ buttonClose }: Props) {
       specialCarac,
     });
   };
-  const handleCadastro = () => {
-    setService([...service, formValues]);
-    setFormValues({
-      name: '',
-      login: '',
-      password: '',
-      url: '',
-    });
-  };
+  // const handleCadastro = () => {
+  //   setService([...service, formValues]);
+  //   setFormValues({
+  //     name: '',
+  //     login: '',
+  //     password: '',
+  //     url: '',
+  //   });
+  // };
 
   return (
-    <form action="">
+    <form
+      action=""
+      onSubmit={ (event) => {
+        event.preventDefault();
+        passwordValidation(event, formValues);
+      } }
+    >
       <label htmlFor="name">Nome do serviço</label>
       <input
         type="text"
@@ -118,16 +125,14 @@ function Form({ buttonClose }: Props) {
         value={ formValues.url }
         onChange={ handleInputChange }
       />
-      <input
-        type="button"
-        value="Cadastrar"
+      <button
+        type="submit"
         disabled={ isButtonDisabled }
-        onClick={ () => {
-          handleCadastro();
-          buttonClose(true);
-        } }
-      />
-      <input onClick={ () => { buttonClose(true); } } type="button" value="Cancelar" />
+      >
+        Cadastrar
+
+      </button>
+      <button onClick={ buttonClose }>Cancelar</button>
     </form>
   );
 }

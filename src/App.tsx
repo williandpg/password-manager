@@ -1,18 +1,23 @@
 import './App.css';
 import { useState } from 'react';
 import Title from './components/Title';
-import Form from './components/Form';
+import Form, { ServicesType } from './components/Form';
 
-type Services = {
-  name: string;
-  login: string;
-  password: string;
-  url: string;
-};
+// type Services = {
+//   name: string;
+//   login: string;
+//   password: string;
+//   url: string;
+// };
 
 function App() {
   const [render, setRender] = useState(true);
-  const [service, setService] = useState<Services[]>([]);
+  const [service, setService] = useState<ServicesType[]>([]);
+  const passwordValidation = (event: any, data: ServicesType) => {
+    const passwordSaved = [...service, data];
+    setService(passwordSaved);
+    setRender(true);
+  };
   return (
     <div>
       <Title />
@@ -22,37 +27,21 @@ function App() {
         </button>
       ) : (
         <Form
-          buttonClose={ (parametro: boolean) => {
-            setRender(parametro);
-            if (parametro === true) {
-              setService([]);
-            }
-          } }
+          passwordValidation={ passwordValidation }
+          buttonClose={ () => setRender(true) }
         />
       )}
-      {service.length === 0 ? (
-        <p>Nenhuma senha cadastrada</p>
-      ) : (
-        <ul>
-          {service.map((services, index) => (
-            <li key={ index }>
-              <a href={ services.url } target="_blank" rel="noopener noreferrer">
-                {services.name}
-              </a>
-              <p>
-                Login:
-                {' '}
-                {services.login}
-              </p>
-              <p>
-                Senha:
-                {' '}
-                {services.password}
-              </p>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        { service.length > 0 ? service.map((services, key) => (
+          <li key={ key }>
+            <a href={ services.url }>{ services.name }</a>
+            <p>Login</p>
+            <p>{ services.login }</p>
+            <p>Senha</p>
+            <p>{ services.password }</p>
+          </li>
+        )) : <h3>Nenhuma senha cadastrada</h3> }
+      </ul>
     </div>
   );
 }
