@@ -54,6 +54,10 @@ function Form({ buttonClose, passwordValidation }: Props) {
       url: '',
     });
   };
+  const [showPassword, setShowPassword] = useState(false);
+  const showHidePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <form
@@ -79,7 +83,7 @@ function Form({ buttonClose, passwordValidation }: Props) {
       />
       <label htmlFor="password">Senha</label>
       <input
-        type="password"
+        type={ showPassword ? 'text' : 'password' }
         id="password"
         value={ formValues.password }
         onChange={ handleInputChange }
@@ -133,6 +137,13 @@ function Form({ buttonClose, passwordValidation }: Props) {
 
       </button>
       <button onClick={ buttonClose }>Cancelar</button>
+      <button
+        type="button"
+        onClick={ showHidePassword }
+        data-testid="show-hide-form-password"
+      >
+        {showPassword ? 'Esconder Senha' : 'Mostrar Senha'}
+      </button>
     </form>
   );
 }
